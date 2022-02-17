@@ -35,17 +35,8 @@ public class ForkJoinServiceImpl implements ForkJoinService {
 
     //使用匿名内部类
     static class MyForkJoinTask extends RecursiveTask<Integer> {
-        //        // 子任务开始计算的值
-//        private Integer startValue;
-//
-//        // 子任务结束计算的值
-//        private Integer endValue;
-        private List<Integer> list;
 
-//        public MyForkJoinTask(Integer startValue , Integer endValue) {
-//            this.startValue = startValue;
-//            this.endValue = endValue;
-//        }
+        private List<Integer> list;
 
 
         public MyForkJoinTask(List<Integer> list) {
@@ -57,11 +48,7 @@ public class ForkJoinServiceImpl implements ForkJoinService {
             // 如果条件成立，说明这个任务所需要计算的数值分为足够小了
             // 可以正式进行累加计算了
             if (list.size() < MAX) {
-                //System.out.println("开始计算的部分：startValue = " + startValue + ";endValue = " + endValue);
                 Integer totalValue = 0;
-//                for(int index = this.startValue ; index <= this.endValue  ; index++) {
-//                    totalValue += index;
-//                }
                 for (int i = 0; i < list.size(); i++) {
                     totalValue += list.size();
                 }
@@ -76,10 +63,6 @@ public class ForkJoinServiceImpl implements ForkJoinService {
                 MyForkJoinTask myForkJoinTaskMax = new MyForkJoinTask(maxList);
                 myForkJoinTaskMin.fork();
                 myForkJoinTaskMax.fork();
-//                MyForkJoinTask subTask1 = new MyForkJoinTask(startValue, (startValue + endValue) / 2);
-//                subTask1.fork();
-//                MyForkJoinTask subTask2 = new MyForkJoinTask((startValue + endValue) / 2 + 1 , endValue);
-//                subTask2.fork();
                 return myForkJoinTaskMin.join() + myForkJoinTaskMax.join();
             }
         }
